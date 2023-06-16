@@ -1,21 +1,9 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { removeTodo, toggleTodo } from '../store/todo-slice';
+import TodoItem from './TodoItem';
+import { useSelector } from 'react-redux';
 import { selectVisibleTodos } from '../store/todo-slice';
-import {
-  Checkbox,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Box,
-  Typography,
-} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { List, Box, Typography } from '@mui/material';
 
 function TodoList() {
-  const dispatch = useDispatch();
   const activeFilter = useSelector((state) => state.filter);
   const todos = useSelector((state) => selectVisibleTodos(state, activeFilter));
 
@@ -33,43 +21,7 @@ function TodoList() {
         }}
       >
         {todos.map((todo) => {
-          return (
-            <ListItem
-              key={todo.id}
-              secondaryAction={
-                <IconButton
-                  edge="end"
-                  onClick={() => dispatch(removeTodo(todo.id))}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              }
-              disablePadding
-            >
-              <ListItemButton
-                role={undefined}
-                onClick={() => dispatch(toggleTodo(todo.id))}
-                dense
-              >
-                <ListItemIcon>
-                  <Checkbox
-                    edge="start"
-                    checked={todo.completed}
-                    tabIndex={-1}
-                    disableRipple
-                  />
-                </ListItemIcon>
-                <ListItemText
-                  sx={{
-                    overflow: "hidden",
-                    textDecorationLine: todo.completed ? 'line-through' : 'none',
-                  }}
-                  id={todo.id}
-                  primary={todo.title}
-                />
-              </ListItemButton>
-            </ListItem>
-          );
+          return <TodoItem key={todo.id} {...todo} />;
         })}
       </List>
     </Box>

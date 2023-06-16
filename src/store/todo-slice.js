@@ -26,6 +26,12 @@ const todoSlice = createSlice({
       const todo = state.find((todo) => todo.id === id);
       todo.completed = !todo.completed;
     },
+    editTodo: (state, action) => {
+      const id = action.payload.id;
+      const title = action.payload.title;
+      const todo = state.find((todo) => todo.id === id);
+      todo.title = title;
+    }
   },
 });
 
@@ -46,5 +52,5 @@ export const selectVisibleTodos = (state, filter) => {
   }
 };
 
-export const { addTodo, removeTodo, toggleTodo } = todoSlice.actions;
+export const { addTodo, removeTodo, toggleTodo, editTodo } = todoSlice.actions;
 export default todoSlice;
